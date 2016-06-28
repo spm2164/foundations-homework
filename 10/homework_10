@@ -1,0 +1,79 @@
+For homework 10 you can pick between practicing APIs/list/dictionaries or scraping. Take your pick! Both will involve emailing, though. Do both if you're feeling crazy.
+
+-----
+
+Preemptive note: Mailing with Mailgun
+
+When you sign up with Mailgun, you wind up at https://mailgun.com/accounts/free/signup_success - it says "You can send up to 300 emails/day from your sandbox server to authorized recipients only." - you don't need a domain to send email, just add your email address as an authorized recipient.
+
+Code to send an email without an attachment: https://bradgignac.com/2014/05/12/sending-email-with-python-and-the-mailgun-api.html
+
+Code to send an email with an attachment: http://gexos.org/send-email-through-mailgun-with-python-and-pythonanywhere/
+
+------
+
+APIs/Data Structures
+
+Forecasts Part One: Getting data
+
+Using the Dark Sky Forecast API at https://developer.forecast.io/, generate a sentence that describes the weather that day.
+
+    Right now it is TEMPERATURE degrees out and SUMMARY. Today will be TEMP_FEELING with a high of HIGH_TEMP and a low of LOW_TEMP. RAIN_WARNING.
+
+
+TEMPERATURE is the current temperature
+SUMMARY is what it currently looks like (partly cloudy, etc - it's "summary" in the dictionary). Lowercase, please.
+TEMP_FEELING is whether it will be hot, warm, cold, or moderate. You will probably use HIGH_TEMP and your own thoughts and feelings to determine this.
+HIGH_TEMP is the high temperature for the day.
+LOW_TEMP is the low temperature for the day.
+RAIN_WARNING is something like "bring your umbrella!" if it is going to rain at some point during the day.
+
+You can take a look at the documentation, but "current" contains the current conditions and the first element of "daily" is for the current day.
+
+Forecasts Part Two: Sending data
+
+Using a mailgun.com account and their API, send yourself an email every morning at 8AM telling you the above sentence. The subject line of the email should be something like "8AM Weather forecast: January 1, 1970"
+
+-------
+
+Scraping and Saving
+
+Reddit Part One: Getting Data
+
+You're going to scrape the front page of https://www.reddit.com! Reddit is a magic land made of many many semi-independent kingdoms, called subreddits. We need to find out which are the most powerful.
+
+You are going to scrape the front page of reddit every 4 hours, saving a CSV file that includes:
+
+    The title of the post
+    The number of votes it has (the number between the up and down arrows)
+    The number of comments it has
+    What subreddit it is from (e.g. /r/AskReddit, /r/todayilearned)
+    When it was posted (get a TIMESTAMP, e.g. 2016-06-22T12:33:58+00:00, not "4 hours ago")
+    The URL to the post itself
+    The URL of the thumbnail image associated with the post
+
+Note:
+
+Ugh, reddit is horrible when it hasn't been customized to your tastes. If you would like something more exciting/less idiotic, try scraping a multireddit page - https://www.reddit.com/r/multihub/top/?sort=top&t=year - they're subreddits clustered by topics.
+
+For example, you could scrape https://www.reddit.com/user/CrownReserve/m/improveyoself which is all self-improvement subreddits. You can follow the links at https://www.reddit.com/r/multihub/top/?sort=top&t=year or use the "Find Multireddits" link on the Multireddit page to find more.
+
+Reddit Part Two: Sending data
+
+You'd like to get something in your inbox about what's happening on reddit every morning at 8:30AM. Using a mailgun.com account and their API, send an email to your email address with the the CSV you saved at 8AM attached. The title of the email should be something like "Reddit this morning: January, 1 1970"
+
+TIP: How are you going to find that csv file? Well, think about specific the datetime stamp in the filename really needs to be.
+Jonathan Soma
+
+4:13 PM (5 hours ago)
+
+to Rashida, Stephan
+A couple other important things!!
+
+REMOVE YOUR MAILGUN API KEY BEFORE YOU CHECK THIS CODE INTO GITHUB.
+
+And reddit knows you're a bot!  You can fake being a browser like this:
+
+headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
+
+response = requests.get("http://www.reddit.com", headers=headers)
